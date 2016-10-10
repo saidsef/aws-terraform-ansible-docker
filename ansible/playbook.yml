@@ -1,0 +1,29 @@
+- hosts: appserver
+  become: true
+  become_user: root
+  remote_user: ubuntu
+  tasks:
+  - name: ensure nginx is at the latest version
+    apt: name=nginx-full state=latest
+  - name: remove default nginx configs
+    file: path=/etc/nginx/sites-available/default state=absent
+    with_items:
+      - { src=sites-available/default }
+      - { src=sites-enabled/default }
+  - name: write the docker composer config file
+    template: src=../docker/docker-compose.yml dest=/home/ubuntu/docker-compose.yml
+  - name: write the nginx server config file
+    template: src=../nginx/nginx.conf dest=/etc/nginx/nginx.conf
+  - name: write the nginx proxy config file
+    template: src=../nginx/proxy.conf dest=/etc/nginx/conf.d/proxy.conf
+  - command: /usr/local/bin/docker-compose up -d
+    become: true
+    args:
+      chdir: /home/ubuntu
+    notify:
+    - restart nginx
+  - name: ensure nginx is running (and enable it at boot)
+    service: name=nginx state=started enabled=yes
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted

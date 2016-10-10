@@ -1,0 +1,9 @@
+# files folders to ignore
+.cache/
+.aws-cli
+.terraform/
+*.tfstate.backup
+*.tfstate
+*.tfvars
+ansible/hosts
+ansible/*.retry

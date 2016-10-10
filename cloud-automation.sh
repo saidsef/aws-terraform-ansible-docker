@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -ex
+set -e
 
 # Set script variables
 APP=$1

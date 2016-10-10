@@ -48,7 +48,7 @@ runTerraform() {
   -var "instance_type=${SIZE:-t2.nano}"
   if [ $? -eq 0 ]; then
     echo "Waiting for AWS resources ...."
-    sleep 20
+    sleep 120
     cd ../ansible
     INSTANCES_IPS=`aws ec2 describe-instances --filter Name=tag:Name,Values=said-sef-${APP}* --query "Reservations[*].Instances[*].PublicIpAddress" --output text`
     sed "s/INSTANCES_IPS/${INSTANCES_IPS}/g" < hosts.template > hosts

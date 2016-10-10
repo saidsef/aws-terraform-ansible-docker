@@ -50,7 +50,7 @@ runTerraform() {
     echo "Waiting for AWS resources ...."
     sleep 20
     cd ../ansible
-    INSTANCES_IPS=$(aws ec2 describe-instances --filter Name=tag:Name,Values=said-sef-${APP}* --query "Reservations[*].Instances[*].PublicIpAddress" --output text))
+    INSTANCES_IPS=`aws ec2 describe-instances --filter Name=tag:Name,Values=said-sef-${APP}* --query "Reservations[*].Instances[*].PublicIpAddress" --output text`
     sed "s/INSTANCES_IPS/${INSTANCES_IPS}/g" < hosts.template > hosts
     ansible-playbook -i hosts playbook.yml
   else

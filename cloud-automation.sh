@@ -51,6 +51,10 @@ runTerraform() {
     sleep 120
     cd ../ansible
     INSTANCES_IPS=`aws ec2 describe-instances --filter Name=tag:Name,Values=said-sef-${APP}* --query "Reservations[*].Instances[*].PublicIpAddress" --output text`
+    echo "#################"
+    echo "Instance(s) IP Address"
+    echo "${INSTANCES_IPS}"
+    echo "#################"
     sed "s/INSTANCES_IPS/${INSTANCES_IPS}/g" < hosts.template > hosts
     ansible-playbook -i hosts playbook.yml
   else

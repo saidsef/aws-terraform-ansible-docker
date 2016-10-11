@@ -8,12 +8,14 @@ Make sure the following applications are installed and are set in the enviroment
 - Terraform >= 0.7.5
 - Ansible >= 2.1.2.0
 
-Also, export your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as environment variables, and run `aws configure` to complete setup:
+Export your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as environment variables, and run `aws configure` to complete setup:
 
 ```shell
 export AWS_ACCESS_KEY_ID=<access-key>
 export AWS_SECRET_ACCESS_KEY=<secret-key>
 ```
+
+Also, update `public_key` variable with your public ssh key, the file is located at `terraform-aws/variables.tf`
 
 ### Assumptions
 

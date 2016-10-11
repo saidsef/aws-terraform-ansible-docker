@@ -48,15 +48,16 @@ runTerraform() {
   -var "instance_type=${SIZE:-t2.nano}"
   if [ $? -eq 0 ]; then
     echo "Waiting for AWS resources ...."
-    sleep 120
-    cd ../ansible
-    INSTANCES_IPS=`aws ec2 describe-instances --filter Name=tag:Name,Values=said-sef-${APP}* --query "Reservations[*].Instances[*].PublicIpAddress" --output text`
+    sleep 140
+    INSTANCES_IPS="`aws ec2 describe-instances --filter Name=tag:Name,Values=said-sef-${APP}* --query "Reservations[*].Instances[*].PublicIpAddress" --output text`"
     echo "#################"
     echo "Instance(s) IP Address"
     echo "${INSTANCES_IPS}"
     echo "#################"
-    sed "s/INSTANCES_IPS/${INSTANCES_IPS}/g" < hosts.template > hosts
-    ansible-playbook -i hosts playbook.yml
+    cd ..
+    ./ips_to_file.py './ansible/' "${INSTANCES_IPS}"
+    cd ansible
+    ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i hosts playbook.yml
   else
     echo "Terraform didn't complete successfully!"
     exit 1

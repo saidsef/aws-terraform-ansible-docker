@@ -16,10 +16,10 @@ resource "aws_elb" "elb" {
 
     health_check {
     healthy_threshold = 2
-    unhealthy_threshold = 3
-    timeout = 3
+    unhealthy_threshold = 5
+    timeout = 15
     target = "TCP:80"
-    interval = 30
+    interval = 45
     }
 
     cross_zone_load_balancing = true

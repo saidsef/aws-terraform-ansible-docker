@@ -48,7 +48,7 @@ runTerraform() {
   -var "instance_type=${SIZE:-t2.nano}"
   if [ $? -eq 0 ]; then
     echo "Waiting for AWS resources ...."
-    sleep 140
+    sleep 185
     INSTANCES_IPS="`aws ec2 describe-instances --filter Name=tag:Name,Values=said-sef-${APP}* --query "Reservations[*].Instances[*].PublicIpAddress" --output text`"
     echo "#################"
     echo "Instance(s) IP Address"

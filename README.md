@@ -31,6 +31,7 @@ This application will create the following resources:
  * Internet Gateway
  * Security Groups
  * Elatic Loadbalance
+ * Launch Configuration
  * Autoscaling Groups
  * EC2 Key
  * EC2 Instance(s)
@@ -42,10 +43,13 @@ This application will create the following resources:
 ```
 ├── ansible
 │   ├── hosts.template
+│   ├── playbook.retry
 │   └── playbook.yml
 ├── cloud-automation.sh
 ├── docker
 │   └── docker-compose.yml
+├── ips_to_file.py
+├── LICENSE.md
 ├── nginx
 │   ├── nginx.conf
 │   └── proxy.conf

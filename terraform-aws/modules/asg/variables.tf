@@ -1,5 +1,6 @@
 // Module specific variables
 variable "name" {}
+
 variable "key_name" {}
 variable "availability_zones" {}
 variable "load_balancers" {}

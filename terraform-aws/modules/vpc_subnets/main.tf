@@ -3,20 +3,20 @@ resource "aws_vpc" "vpc" {
   cidr_block           = "${var.vpc_cidr}"
   enable_dns_support   = "${var.enable_dns_support}"
   enable_dns_hostnames = "${var.enable_dns_hostnames}"
-  tags {
-    Name = "${var.name}-${var.environment}-vpc"
-    environment =  "${var.environment}"
-  }
 
+  tags {
+    Name        = "${var.name}-${var.environment}-vpc"
+    environment = "${var.environment}"
+  }
 }
 
 // Create the IGW
 resource "aws_internet_gateway" "igw" {
   vpc_id = "${aws_vpc.vpc.id}"
-  tags {
-  	Name = "${var.name}-${var.environment}-igw"
-  }
 
+  tags {
+    Name = "${var.name}-${var.environment}-igw"
+  }
 }
 
 // Create Public Subnets
@@ -85,7 +85,6 @@ output "vpc_id" {
 output "public_subnets_id" {
   value = "${join(",", aws_subnet.public.*.id)}"
 }
-
 
 output "private_subnets_id" {
   value = "${join(",", aws_subnet.private.*.id)}"

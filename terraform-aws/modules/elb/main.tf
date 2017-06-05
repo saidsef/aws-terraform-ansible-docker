@@ -1,35 +1,36 @@
 resource "aws_elb" "elb" {
-    name = "${var.name}-${var.environment}-elb"
-    security_groups = ["${split(",", var.security_groups)}"]
-    subnets = ["${split(",", var.subnets)}"]
-    tags {
-      Name = "${var.name}-${var.environment}-elb"
-      environment =  "${var.environment}"
-    }
+  name            = "${var.name}-${var.environment}-elb"
+  security_groups = ["${split(",", var.security_groups)}"]
+  subnets         = ["${split(",", var.subnets)}"]
 
-    listener {
-    instance_port = 80
+  tags {
+    Name        = "${var.name}-${var.environment}-elb"
+    environment = "${var.environment}"
+  }
+
+  listener {
+    instance_port     = 80
     instance_protocol = "http"
-    lb_port = 80
-    lb_protocol = "http"
-    }
+    lb_port           = 80
+    lb_protocol       = "http"
+  }
 
-    health_check {
-    healthy_threshold = 2
+  health_check {
+    healthy_threshold   = 2
     unhealthy_threshold = 5
-    timeout = 15
-    target = "TCP:80"
-    interval = 45
-    }
+    timeout             = 15
+    target              = "TCP:80"
+    interval            = 45
+  }
 
-    cross_zone_load_balancing = true
-    idle_timeout = 400
-    connection_draining = true
-    connection_draining_timeout = 400
+  cross_zone_load_balancing   = true
+  idle_timeout                = 400
+  connection_draining         = true
+  connection_draining_timeout = 400
 
-    provisioner "local-exec" {
+  provisioner "local-exec" {
     command = "echo ELB_DNS_NAME: ${aws_elb.elb.dns_name} >> ${var.name}-${var.environment}.yml"
-    }
+  }
 }
 
 output "elb_name" {

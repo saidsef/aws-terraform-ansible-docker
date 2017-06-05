@@ -1,6 +1,6 @@
 // Module specific variables
 variable "name" {
-	default = "test"
+  default = "test"
 }
 
 variable "environment" {
